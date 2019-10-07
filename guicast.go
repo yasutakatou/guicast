@@ -7,9 +7,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/abiosoft/ishell"
+	"github.com/yasutakatou/ishell"
 	"github.com/kbinani/screenshot"
-	"github.com/taglme/string2keyboard"
+	"github.com/yasutakatou/string2keyboard"
 	"image"
 	"image/png"
 	"log"
