@@ -1,5 +1,7 @@
 # guicast
 
+![guicast](https://github.com/yasutakatou/guicast/blob/pic/guicast.gif)
+
 WindowsのGUIをプロンプトから連続でキャプチャとりつつ自動的に操作するCLIツール
 
 ・以前作ったのはキャプチャとキーエミュレートが外部コマンドに依存していたのでWin32API使ってネイティブで動作するようにした
