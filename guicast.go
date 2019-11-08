@@ -65,15 +65,16 @@ func main() {
   cliHwnd = getWindow("GetForegroundWindow")
  
   _debug := flag.Bool("debug",false,"[-debug=DEBUG MODE]")
+  _forcusW := flag.String("forcus","Chrome","[-forcus=FORCUS WINDOW TITLE]")
   flag.Parse()
   debug = bool(*_debug)
 
-  loopWait := 1
+  loopWait := 1000
   loopCount := 1
   changeWindow := "ctrl,\\t"
-  targetWindow := "Chrome"
+  targetWindow := string(*_forcusW)
   autoCapture := false
-  captureWait := 1
+  captureWait := 1000
   captureHang := 10
   capturePath := ""
 
@@ -91,6 +92,7 @@ func main() {
       fmt.Println("captureWait:" + strconv.Itoa(captureWait))
       fmt.Println("captureHang:" + strconv.Itoa(captureHang))
       fmt.Println("capturePath:" + capturePath)
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -112,6 +114,7 @@ func main() {
         log.Fatal(err)
       }
       loopWait = cnt
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -133,6 +136,7 @@ func main() {
         log.Fatal(err)
       }
       loopCount = cnt
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -155,6 +159,7 @@ func main() {
 
       targetWindow = tool
       forcusWindow(targetWindow)
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -176,6 +181,7 @@ func main() {
       } 
 
       capturePath = tool
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -188,6 +194,7 @@ func main() {
         return
       }
       changeWindow = c.Args[0]
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -201,6 +208,7 @@ func main() {
         autoCapture = true
       }
       fmt.Printf("autoCapture mode: %t\n", autoCapture)
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -209,6 +217,7 @@ func main() {
     Help: "all window listing",
     Func: func(c *ishell.Context) {
       listWindow()
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -230,6 +239,7 @@ func main() {
         log.Fatal(err)
       }
       loopWait = cnt
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -251,6 +261,7 @@ func main() {
         log.Fatal(err)
       }
       loopWait = cnt
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -267,7 +278,7 @@ func main() {
 
         hangCount := 0
         for {
-          time.Sleep(time.Duration(captureWait) * time.Second)
+          time.Sleep(time.Duration(captureWait) * time.Millisecond)
           if Exists(capturePath + captureFile) == true {
             fmt.Println("Capture Success: " + captureFile + " (" + Filesize(capturePath + captureFile) + ")")
             break
@@ -282,6 +293,7 @@ func main() {
 
         sendKeyOrString(false, changeWindow, "")
       }
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -298,6 +310,7 @@ func main() {
         }
       } 
       do(capturePath,changeWindow,targetWindow,doCmd,loopCount,loopWait,captureHang,captureWait,false)
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -314,6 +327,7 @@ func main() {
         }
       }
       do(capturePath,changeWindow,targetWindow,doCmd,loopCount,loopWait,captureHang,captureWait,autoCapture)
+      fmt.Println(" - - - - - - ")
     },
   })
 
@@ -439,7 +453,7 @@ func do(capturePath,changeWindow,targetWindow,doCmd string,loopCount,loopWait,ca
           waits := strings.Replace(params[r], "wait", "", 1)
           cnt, _ := strconv.Atoi(waits)
           fmt.Println("wait: " + waits)
-          time.Sleep(time.Duration(cnt) * time.Second)
+          time.Sleep(time.Duration(cnt) * time.Millisecond)
         } else if strings.Index(params[r],"[") != -1 && strings.Index(params[r],"]") != -1 {
           keya := strings.Replace(params[r], "[", "", 1)
           keyb := strings.Replace(keya, "]", "", 1)
@@ -454,7 +468,7 @@ func do(capturePath,changeWindow,targetWindow,doCmd string,loopCount,loopWait,ca
         waits := strings.Replace(doCmd, "wait", "", 1)
         cnt, _ := strconv.Atoi(waits)
         fmt.Println("wait: " + waits)
-        time.Sleep(time.Duration(cnt) * time.Second)
+        time.Sleep(time.Duration(cnt) * time.Millisecond)
       } else if strings.Index(doCmd,"[") != -1 && strings.Index(doCmd,"]") != -1 {
         keya := strings.Replace(doCmd, "[", "", 1)
         keyb := strings.Replace(keya, "]", "", 1)
@@ -465,7 +479,7 @@ func do(capturePath,changeWindow,targetWindow,doCmd string,loopCount,loopWait,ca
       }
     }
 
-    time.Sleep(time.Duration(loopWait) * time.Second)
+    time.Sleep(time.Duration(loopWait) * time.Millisecond)
 
     if autoCapture == true {
       t := time.Now()
@@ -476,7 +490,7 @@ func do(capturePath,changeWindow,targetWindow,doCmd string,loopCount,loopWait,ca
 
       hangCount := 0
       for {
-        time.Sleep(time.Duration(captureWait) * time.Second)
+        time.Sleep(time.Duration(captureWait) * time.Millisecond)
         if Exists(capturePath + captureFile) == true {
           fmt.Println("Capture Success: " + captureFile + " (" + Filesize(capturePath + captureFile) + ")")
           break
